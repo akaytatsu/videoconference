@@ -41,5 +41,7 @@ Agora basta acessar o link e permitir o acesso à câmera e microfone
 ## Ajuda
 
 O intuito é colaborar para amenizar um pouco os efeitos da pandemia.
+
 Duvidas thiagosistemas3@gmail.com
+
 Deus abençoe a todos.
