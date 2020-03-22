@@ -1,6 +1,6 @@
 # Simples VideoConf!
 
-Esse projeto foi criado em meio a crise de proliferação do coronavirus no mundo. Muitas empresas, negócios, cultos religiosos estão por decreto impedidos de abrirem, como medida para conter o avanço da pandemia. 
+Esse projeto foi criado em meio a crise de proliferação do coronavirus no mundo. Muitas empresas, negócios, cultos, estão por decreto impedidos de abrirem, como medida para conter o avanço da pandemia. 
 
 Muitos estão com dúvidas ou dificuldades de como terem uma comunicação remota. Muitas ferramentas existem para esse fim, como Skype, Whatsapp, Google Meeting, etc. Porem ferramentas como Whatsapp não foram desenvolvidas para esse fim (video conferencia), ferramentas como Google Meeting e Skype tem a necessidade de criação de contas.
 
