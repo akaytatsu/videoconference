@@ -15,6 +15,7 @@ Estou usando a tecnologia WebRtc para conexão peer-to-peer. É muitos simples d
 
 ## Requisitos
 
+ - Google Chrome
  - Servidor WEB
  um servidor web para servidor os arquivos HTML, CSS e JAVASCRIPT. Se você possui um site, isso é o essencial.
  - HTTPS
