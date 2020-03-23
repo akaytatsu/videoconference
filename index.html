@@ -5,26 +5,32 @@
         <meta charset="utf-8">
         <title>Video Conference</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-        <link rel="stylesheet" href="/conference/css/stylesheet.css">
+        <link rel="stylesheet" href="/conference/css/index.css">
     </head>
 
     <body>
-        <div id="audios-container" class="container_main">
+        
+        <div class="container">
+            <div class="box_description">
+                <p>Esse projeto é opensource, o código fonte esta disponivel em:</p>
+                <p>
+                    <a href="https://github.com/akaytatsu/videoconference">https://github.com/akaytatsu/videoconference</a>
+                </p>
+            </div>
+
+            <div class="box_options" onclick="genLink()">
+                Criar Sala de Reunião
+            </div>
+
+            <div class="box_link">
+                <p>seu link para reuniões é: <br></p>
+                <p id="link_meet">https://www.videomeet.com.br/conf.html?room=asdsdoi</p>                
+            </div>
         </div>
 
-        <script src="/conference/js/RTCMultiConnection.min.js"></script>
-        <script src="/conference/js/adapter.js"></script>
-        <script src="/conference/js/socket.io.js"></script>
         <script src="/conference/js/jquery.min.js"></script>
+        <script src="/conference/js/index.js"></script>
 
-        <link rel="stylesheet" href="/conference/css/getHTMLMediaElement.css">
-        <script src="/conference/js/getHTMLMediaElement.js"></script>
-        <script>
-            _ROOM_ID = "COLOQUE_AQUI_UM_CODIGO_UNICO"; //CHANGE HERE WITH UNIQID
-        </script>
-        <script src="/conference/js/snapdata.js"></script>
-
-        <script src="https://www.webrtc-experiment.com/common.js"></script>
     </body>
 
 </html>

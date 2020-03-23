@@ -1,14 +1,28 @@
 _TOTAL_STREAMS = 0;
 
 $(document).ready(function(){
+
+    var roomid = getUrlVars("room").room;
+
+    if(roomid == null || roomid == undefined || roomid == ''){
+        roomid = _ROOM_ID
+    }
     
-    connection.openOrJoin(_ROOM_ID, function(isRoomExist, roomid) {
+    connection.openOrJoin(roomid, function(isRoomExist, roomid) {
         if (!isRoomExist) {
             showRoomURL(roomid);
         }
     });
 
 });
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
 
 function remountRemoveVideo(size, height = null){
 
