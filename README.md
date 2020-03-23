@@ -9,6 +9,10 @@ Não existem serviços simples que não necessitem de contas, login, etc. Acredi
 Minha avó tem dificuldades de instalar um Skype ou um Meeting para participar dos cultos. Por isso, estou criando uma ferramenta muito simples para video conferencia. É tão simples quando acessar um link da internet. Não tem instalação, ou necessidade de criar uma conta, não é necessário fazer um cadastro ou preencher algum formulário. Basta entrar no link e você já esta na conferência.
 
 
+# Demonstração
+
+https://www.videomeet.com.br
+
 # Instalação
 
 Estou usando a tecnologia WebRtc para conexão peer-to-peer. É muitos simples de instalar, em menos de 3 minutos você pode ter uma sala dedicada de conferência sem necessidade de uma grande estrutura para isso.
@@ -38,6 +42,17 @@ _ROOM_ID = "25aa64gh498jwod2fds85847sda76867"; //CHANGE HERE WITH UNIQID
 Copie o arquivo "index.html" e a pasta "conference" para o diretório do seu servidor onde será o link de acesso.
 
 Agora basta acessar o link e permitir o acesso à câmera e microfone
+
+
+## Roadmap
+
+| Feature                                   | Progress |
+| :-----------------------------------------| :------: |
+| Compartilhamento de tela                  |    -    |
+| Centralizar Chamada sobre todas outras    |    -    |
+| Mutar Audio                               |    -    |
+| Bloquear Video                            |    -    |
+
 
 ## Ajuda
 
