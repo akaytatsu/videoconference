@@ -1,5 +1,8 @@
 _TOTAL_STREAMS = 0;
 
+_ME_VIDEO_MUTED = false;
+_ME_AUDIO_MUTED = false;
+
 $(document).ready(function(){
 
     var roomid = getUrlVars("room").room;
@@ -86,6 +89,8 @@ function renderMount(){
 // ..................RTCMultiConnection Code.............
 // ......................................................
 
+var meStream = null;
+
 var connection = new RTCMultiConnection();
 
 // by default, socket.io server is assumed to be deployed on your own URL
@@ -155,12 +160,15 @@ connection.onstream = function(event) {
     // var width = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
     var mediaElement = getHTMLMediaElement(event.mediaElement, {
         // title: event.userid,
-        buttons: ['mute'],
+        buttons: [],
         // width: width,
         showOnMouseEnter: false
     });
 
     if(event.type=="local"){
+
+        meStream = event;
+
         var local_video = document.createElement("div");
         $(local_video).attr('class', 'local_video');
         $(local_video).append(mediaElement);
@@ -224,4 +232,49 @@ function angor (s)
          }
     }
     return r;
+}
+
+function controlButtonsRemount(){
+
+    if(_ME_VIDEO_MUTED == true){
+        $('#mute_video').addClass('btn_option_selected');
+    }
+    else{
+        $('#mute_video').removeClass('btn_option_selected');
+    }
+
+    if(_ME_AUDIO_MUTED == true){
+        $('#mute_microphone').addClass('btn_option_selected');
+    }
+    else{
+        $('#mute_microphone').removeClass('btn_option_selected');
+    }
+
+}
+
+function muteUnmuteMe(mediaType){
+
+    var stream_id = meStream.stream.id;
+
+    if(mediaType == 'video'){
+        if(_ME_VIDEO_MUTED == false){
+            _ME_VIDEO_MUTED = true;
+            connection.streamEvents[stream_id].stream.mute(mediaType);
+        }else{
+            _ME_VIDEO_MUTED = false;
+            connection.streamEvents[stream_id].stream.unmute(mediaType);
+        }
+    }
+
+    if(mediaType == 'audio'){
+        if(_ME_AUDIO_MUTED == false){
+            _ME_AUDIO_MUTED = true;
+            connection.streamEvents[stream_id].stream.mute(mediaType);
+        }else{
+            _ME_AUDIO_MUTED = false;
+            connection.streamEvents[stream_id].stream.unmute(mediaType);
+        }
+    }
+
+    controlButtonsRemount();
 }

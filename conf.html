@@ -6,11 +6,27 @@
         <title>Video Conference</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
         <link rel="stylesheet" href="conference/css/stylesheet.css">
+
+        <script src="https://kit.fontawesome.com/79103b530b.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
         <div id="audios-container" class="container_main">
         </div>
+
+        <div class="btns_containers">
+            <div class="btn_option" id="mute_microphone" onclick="muteUnmuteMe('audio')">
+                <i class="fas fa-microphone-slash fa-1x"></i>
+            </div>
+
+            <div class="btn_option" id="mute_video" onclick="muteUnmuteMe('video')">
+                <i class="fas fa-video-slash fa-1x"></i>
+            </div>
+        </div>
+
+        <!-- <button onclick="unmuteMe('video')">desmutar video</button>
+        <button onclick="muteMe('audio')">mutar audio</button>
+        <button onclick="unmuteMe('audio')">desmutar audio</button> -->
 
         <script src="conference/js/RTCMultiConnection.min.js"></script>
         <script src="conference/js/adapter.js"></script>

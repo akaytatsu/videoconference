@@ -6,6 +6,25 @@
     font-style: normal;
 }
 
+video {
+    pointer-events: none;
+}
+
+video::-webkit-media-controls-start-playback-button {
+    display: none;
+}
+
+/* @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation:portrait) { 
+    body {
+    -webkit-transform: rotate(90deg);
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0; 
+}} */
+
 html, body, section, ul, li, nav, a, h1, h2 {
     padding: 0;
     margin: 0;
@@ -277,5 +296,31 @@ button[disabled], input[disabled] {
     right: 2px;
     width: 100px;
     height: 100px;
+    background-color: red;
+}
+
+.btns_containers{
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.btn_option{
+    margin-right: 20px;
+    background-color: white;
+    border-radius: 500px;
+    width: 55px;
+    height: 55px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+}
+
+.btn_option_selected{
     background-color: red;
 }

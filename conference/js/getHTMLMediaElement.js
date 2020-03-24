@@ -15,10 +15,14 @@ function getHTMLMediaElement(mediaElement, config) {
         try {
             mediaElement.setAttributeNode(document.createAttribute('autoplay'));
             mediaElement.setAttributeNode(document.createAttribute('playsinline'));
+            mediaElement.setAttributeNode(document.createAttribute('controls'));
         } catch (e) {
             mediaElement.setAttribute('autoplay', true);
             mediaElement.setAttribute('playsinline', true);
+            mediaElement.setAttribute('controls', false);
         }
+        
+        mediaElement.setAttribute('controls', false);
 
         if ('srcObject' in mediaElement) {
             mediaElement.srcObject = mediaStream;
@@ -31,7 +35,16 @@ function getHTMLMediaElement(mediaElement, config) {
         return getAudioElement(mediaElement, config);
     }
 
-    var buttons = config.buttons || ['mute-audio', 'mute-video', 'full-screen', 'volume-slider', 'stop'];
+    var buttons = config.buttons || []; //['mute-audio', 'mute-video', 'full-screen', 'volume-slider', 'stop'];
+
+    console.log("buttons");
+    console.log("buttons");
+    console.log("buttons");
+    console.log("buttons");
+    console.log("buttons");
+    console.log("buttons");
+    console.log(buttons);
+
     buttons.has = function(element) {
         return buttons.indexOf(element) !== -1;
     };
@@ -46,7 +59,7 @@ function getHTMLMediaElement(mediaElement, config) {
 
     var mediaControls = document.createElement('div');
     mediaControls.className = 'media-controls';
-    mediaElementContainer.appendChild(mediaControls);
+    // mediaElementContainer.appendChild(mediaControls);
 
     if (buttons.has('mute-audio')) {
         var muteAudio = document.createElement('div');
@@ -237,7 +250,7 @@ function getHTMLMediaElement(mediaElement, config) {
     }
 
     if (buttons.has('volume-slider') || buttons.has('full-screen') || buttons.has('record-audio') || buttons.has('record-video')) {
-        mediaElementContainer.appendChild(volumeControl);
+        // mediaElementContainer.appendChild(volumeControl);
     }
 
     var mediaBox = document.createElement('div');
@@ -252,6 +265,7 @@ function getHTMLMediaElement(mediaElement, config) {
     }
 
     mediaBox.appendChild(mediaElement);
+    
 
     if (!config.width) config.width = (innerWidth / 2) - 50;
 
@@ -262,70 +276,71 @@ function getHTMLMediaElement(mediaElement, config) {
     }
 
     mediaBox.querySelector('video').style.maxHeight = innerHeight + 'px';
+    mediaBox.querySelector('video').setAttribute("controls", "false");
 
     var times = 0;
 
-    function adjustControls() {
-        mediaControls.style.marginLeft = (mediaElementContainer.clientWidth - mediaControls.clientWidth - 2) + 'px';
+    // function adjustControls() {
+    //     mediaControls.style.marginLeft = (mediaElementContainer.clientWidth - mediaControls.clientWidth - 2) + 'px';
 
-        if (slider) {
-            slider.style.width = (mediaElementContainer.clientWidth / 3) + 'px';
-            volumeControl.style.marginLeft = (mediaElementContainer.clientWidth / 3 - 30) + 'px';
+    //     if (slider) {
+    //         slider.style.width = (mediaElementContainer.clientWidth / 3) + 'px';
+    //         volumeControl.style.marginLeft = (mediaElementContainer.clientWidth / 3 - 30) + 'px';
 
-            if (zoom) zoom.style['border-top-right-radius'] = '5px';
-        } else {
-            volumeControl.style.marginLeft = (mediaElementContainer.clientWidth - volumeControl.clientWidth - 2) + 'px';
-        }
+    //         if (zoom) zoom.style['border-top-right-radius'] = '5px';
+    //     } else {
+    //         volumeControl.style.marginLeft = (mediaElementContainer.clientWidth - volumeControl.clientWidth - 2) + 'px';
+    //     }
 
-        volumeControl.style.marginTop = (mediaElementContainer.clientHeight - volumeControl.clientHeight - 2) + 'px';
+    //     volumeControl.style.marginTop = (mediaElementContainer.clientHeight - volumeControl.clientHeight - 2) + 'px';
 
-        if (times < 10) {
-            times++;
-            setTimeout(adjustControls, 1000);
-        } else times = 0;
-    }
+    //     if (times < 10) {
+    //         times++;
+    //         setTimeout(adjustControls, 1000);
+    //     } else times = 0;
+    // }
 
-    if (config.showOnMouseEnter || typeof config.showOnMouseEnter === 'undefined') {
-        mediaElementContainer.onmouseenter = mediaElementContainer.onmousedown = function() {
-            adjustControls();
-            mediaControls.style.opacity = 1;
-            volumeControl.style.opacity = 1;
-        };
+    // if (config.showOnMouseEnter || typeof config.showOnMouseEnter === 'undefined') {
+    //     mediaElementContainer.onmouseenter = mediaElementContainer.onmousedown = function() {
+    //         adjustControls();
+    //         mediaControls.style.opacity = 1;
+    //         volumeControl.style.opacity = 1;
+    //     };
 
-        mediaElementContainer.onmouseleave = function() {
-            mediaControls.style.opacity = 0;
-            volumeControl.style.opacity = 0;
-        };
-    } else {
-        setTimeout(function() {
-            adjustControls();
-            setTimeout(function() {
-                mediaControls.style.opacity = 1;
-                volumeControl.style.opacity = 1;
-            }, 300);
-        }, 700);
-    }
+    //     mediaElementContainer.onmouseleave = function() {
+    //         mediaControls.style.opacity = 0;
+    //         volumeControl.style.opacity = 0;
+    //     };
+    // } else {
+    //     setTimeout(function() {
+    //         adjustControls();
+    //         setTimeout(function() {
+    //             mediaControls.style.opacity = 1;
+    //             volumeControl.style.opacity = 1;
+    //         }, 300);
+    //     }, 700);
+    // }
 
-    adjustControls();
+    // adjustControls();
 
-    mediaElementContainer.toggle = function(clasName) {
-        if (typeof clasName != 'string') {
-            for (var i = 0; i < clasName.length; i++) {
-                mediaElementContainer.toggle(clasName[i]);
-            }
-            return;
-        }
+    // mediaElementContainer.toggle = function(clasName) {
+    //     if (typeof clasName != 'string') {
+    //         for (var i = 0; i < clasName.length; i++) {
+    //             mediaElementContainer.toggle(clasName[i]);
+    //         }
+    //         return;
+    //     }
 
-        if (clasName == 'mute-audio' && muteAudio) muteAudio.onclick();
-        if (clasName == 'mute-video' && muteVideo) muteVideo.onclick();
+    //     if (clasName == 'mute-audio' && muteAudio) muteAudio.onclick();
+    //     if (clasName == 'mute-video' && muteVideo) muteVideo.onclick();
 
-        if (clasName == 'record-audio' && recordAudio) recordAudio.onclick();
-        if (clasName == 'record-video' && recordVideo) recordVideo.onclick();
+    //     if (clasName == 'record-audio' && recordAudio) recordAudio.onclick();
+    //     if (clasName == 'record-video' && recordVideo) recordVideo.onclick();
 
-        if (clasName == 'stop' && stop) stop.onclick();
+    //     if (clasName == 'stop' && stop) stop.onclick();
 
-        return this;
-    };
+    //     return this;
+    // };
 
     mediaElementContainer.media = mediaElement;
 
@@ -344,10 +359,10 @@ function getAudioElement(mediaElement, config) {
 
         try {
             mediaElement.setAttributeNode(document.createAttribute('autoplay'));
-            mediaElement.setAttributeNode(document.createAttribute('controls'));
+            // mediaElement.setAttributeNode(document.createAttribute('controls'));
         } catch (e) {
             mediaElement.setAttribute('autoplay', true);
-            mediaElement.setAttribute('controls', true);
+            mediaElement.setAttribute('controls', false);
         }
 
         if ('srcObject' in mediaElement) {
