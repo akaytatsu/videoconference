@@ -37,14 +37,6 @@ function getHTMLMediaElement(mediaElement, config) {
 
     var buttons = config.buttons || []; //['mute-audio', 'mute-video', 'full-screen', 'volume-slider', 'stop'];
 
-    console.log("buttons");
-    console.log("buttons");
-    console.log("buttons");
-    console.log("buttons");
-    console.log("buttons");
-    console.log("buttons");
-    console.log(buttons);
-
     buttons.has = function(element) {
         return buttons.indexOf(element) !== -1;
     };

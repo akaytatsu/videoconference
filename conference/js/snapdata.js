@@ -3,9 +3,16 @@ _TOTAL_STREAMS = 0;
 _ME_VIDEO_MUTED = false;
 _ME_AUDIO_MUTED = false;
 
+_IS_PRESETENTION_ROOM = false;
+_IS_PRESENTENTION_USER = false;
+_PRESENTENTION_USER = null;
+
 $(document).ready(function(){
 
-    var roomid = getUrlVars("room").room;
+    var roomid = getUrlVars().room;
+
+    _IS_PRESETENTION_ROOM = getUrlVars().presentention_room == "1" ? true : false;
+    _IS_PRESENTENTION_USER = getUrlVars().presentention_user == "1" ? true : false;
 
     if(roomid == null || roomid == undefined || roomid == ''){
         roomid = _ROOM_ID
@@ -27,7 +34,7 @@ function getUrlVars() {
     return vars;
 }
 
-function remountRemoveVideo(size, height = null){
+function remountRemoveVideo(size, height = null, adminUserId){
 
     var width = size - 1;
     var height = height == null ? width : height - 1;
@@ -40,6 +47,21 @@ function remountRemoveVideo(size, height = null){
     $('.remove_video').each( (index, elem) => {
         var style = "height: " + height + "%; width: " + width + "%;";
         $(elem).attr("style", style);
+
+        if(adminUserId != null && adminUserId != undefined){
+
+            if(elem.id == "remote_stream_"+adminUserId){
+                var style = "height: " + height + "%; width: " + width + "%;";
+            }else{
+                var style = "height: 1px; width: 1px;";
+            }
+
+        }else{
+            var style = "height: " + height + "%; width: " + width + "%;";
+        }
+
+        $(elem).attr("style", style);
+        
     } );
 
     $('.remove_video').each( (index, elem) => {
@@ -47,40 +69,45 @@ function remountRemoveVideo(size, height = null){
             $(elem).remove();
         }
     } );
-
-    // $('.local_video').attr("style", "height: 100%; width: 100%");
+    
 }
 
 function renderMount(){
 
     _TOTAL_STREAMS = $('.remove_video').length;
 
-    if(_TOTAL_STREAMS == 1){
-        remountRemoveVideo(100);
-    }
+    if(_IS_PRESETENTION_ROOM == true){
+        remountRemoveVideo(75, null, _PRESENTENTION_USER);
+    }else{
 
-    else if(_TOTAL_STREAMS == 2){
-        remountRemoveVideo(50, 100);
-    }
+        if(_TOTAL_STREAMS == 1){
+            remountRemoveVideo(100);
+        }
+    
+        else if(_TOTAL_STREAMS == 2){
+            remountRemoveVideo(50, 100);
+        }
+    
+        else if(_TOTAL_STREAMS >= 3 && _TOTAL_STREAMS <= 4){
+            remountRemoveVideo(50);
+        }
+    
+        else if(_TOTAL_STREAMS >= 5 && _TOTAL_STREAMS <= 6){
+            remountRemoveVideo(33, 50);
+        }
+    
+        else if(_TOTAL_STREAMS >= 7 && _TOTAL_STREAMS <= 8){
+            remountRemoveVideo(25, 50);
+        }
+    
+        else if(_TOTAL_STREAMS >= 9 && _TOTAL_STREAMS <= 10){
+            remountRemoveVideo(20, 50);
+        }
+    
+        else{
+            remountRemoveVideo(20);
+        }
 
-    else if(_TOTAL_STREAMS >= 3 && _TOTAL_STREAMS <= 4){
-        remountRemoveVideo(50);
-    }
-
-    else if(_TOTAL_STREAMS >= 5 && _TOTAL_STREAMS <= 6){
-        remountRemoveVideo(33, 50);
-    }
-
-    else if(_TOTAL_STREAMS >= 7 && _TOTAL_STREAMS <= 8){
-        remountRemoveVideo(25, 50);
-    }
-
-    else if(_TOTAL_STREAMS >= 9 && _TOTAL_STREAMS <= 10){
-        remountRemoveVideo(20, 50);
-    }
-
-    else{
-        remountRemoveVideo(20);
     }
 
 }
@@ -103,7 +130,8 @@ connection.socketMessageEvent = 'video-conference';
 
 connection.session = {
     audio: true,
-    video: true
+    video: true,
+    data: true
 };
 
 var bitrates = 512;
@@ -156,6 +184,37 @@ connection.iceServers = [{
 }];
 
 connection.audiosContainer = document.getElementById('audios-container');
+
+connection.onmessage = function(event){
+
+    console.log("event");
+    console.log("event");
+    console.log("event");
+    console.log("event");
+    console.log("event");
+    console.log("event");
+    console.log("event");
+    console.log(event);
+
+    if(typeof(event.data) == "object"){
+        if(event.data.type == "send_user_presentention"){
+            _PRESENTENTION_USER = event.data.value;
+
+            renderMount();
+        }
+    }
+
+}
+
+function sendAdminUserId(adminUserId, toUserId){
+    if(_IS_PRESETENTION_ROOM == true && _IS_PRESENTENTION_USER == true){
+        connection.send({
+            'type': 'send_user_presentention',
+            'value': adminUserId
+        }, toUserId);
+    }
+}
+
 connection.onstream = function(event) {
     // var width = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
     var mediaElement = getHTMLMediaElement(event.mediaElement, {
@@ -171,15 +230,27 @@ connection.onstream = function(event) {
 
         var local_video = document.createElement("div");
         $(local_video).attr('class', 'local_video');
+        $(local_video).attr('id', 'local_stream_' + event.userid );
         $(local_video).append(mediaElement);
 
         connection.audiosContainer.appendChild(local_video);
+
+        if(_IS_PRESETENTION_ROOM == true && _IS_PRESENTENTION_USER == true){
+            _PRESENTENTION_USER = event.userid;
+        }
     }else{
+
         var remove_video = document.createElement("div");
         $(remove_video).attr('class', 'remove_video');
+        $(remove_video).attr('id', 'remote_stream_' + event.userid );
         $(remove_video).append(mediaElement);
 
         connection.audiosContainer.appendChild(remove_video);
+
+        if(_IS_PRESETENTION_ROOM == true && _IS_PRESENTENTION_USER == true){
+    
+            sendAdminUserId(_PRESENTENTION_USER, _PRESENTENTION_USER);
+        }
     }
 
     renderMount();
