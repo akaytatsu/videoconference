@@ -163,7 +163,7 @@ if (resolutions == 'Ultra-HD') {
 }
 
 connection.mediaConstraints = {
-    video: videoConstraints,
+    video: null,
     audio: true
 };
 
