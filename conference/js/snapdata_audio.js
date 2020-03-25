@@ -130,6 +130,7 @@ connection.socketMessageEvent = 'video-conference';
 
 connection.session = {
     audio: true,
+    video: false
 };
 
 var bitrates = 512;
@@ -161,7 +162,7 @@ if (resolutions == 'Ultra-HD') {
 }
 
 connection.mediaConstraints = {
-    video: null,
+    video: false,
     audio: true
 };
 
