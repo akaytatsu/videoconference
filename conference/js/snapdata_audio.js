@@ -130,8 +130,6 @@ connection.socketMessageEvent = 'video-conference';
 
 connection.session = {
     audio: true,
-    video: false,
-    data: false
 };
 
 var bitrates = 512;
